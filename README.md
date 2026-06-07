@@ -259,6 +259,7 @@ project/
 ## 🚀 启动方式
 
 ```bash
+python init_db.py
 python main.py
 ```
 
