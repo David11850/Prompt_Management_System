@@ -2,6 +2,7 @@
 import sqlite3
 import json
 
+# connect to/open the target sqlite db in the disk
 def get_connection():
     conn=sqlite3.connect('./database/prompt_manager.db')
     conn.row_factory=sqlite3.Row
@@ -40,6 +41,7 @@ def get_prompt(prompt_id:int)->dict:
         raise ValueError("prompt not found")
     return dict(row)
 
+# get all prompts in db
 def get_all_prompts()->list:
     conn=get_connection()
     cursor=conn.cursor()
@@ -71,6 +73,7 @@ def get_prompt_latest_version(prompt_id:int)->int:
         return 1
     return raw[0]+1
 
+# create a prompt version in prompt_version db
 def create_version(
     prompt_id:int,
     content:str,
@@ -112,6 +115,7 @@ def version_row_to_dict(row)->dict:
         result["tags"]=json.loads(result["tags"])
     return result
 
+# get target prompt version in prompt_versoion db
 def get_target_version(prompt_id:int,version:int)->dict:
     conn=get_connection()
     cursor=conn.cursor()
@@ -128,6 +132,7 @@ def get_target_version(prompt_id:int,version:int)->dict:
         raise ValueError("no such version or prompt")
     return version_row_to_dict(raw)
 
+# get latest version of the target prompt in prompt_version db
 def get_latest_version(prompt_id:int)->dict:
     conn=get_connection()
     cursor=conn.cursor()
@@ -145,6 +150,7 @@ def get_latest_version(prompt_id:int)->dict:
         raise ValueError("no latest version yet")
     return version_row_to_dict(raw)
 
+# get all version in prompt_version db
 def get_all_versions(prompt_id:int)->list:
     conn=get_connection()
     cursor=conn.cursor()
@@ -156,7 +162,7 @@ def get_all_versions(prompt_id:int)->list:
     (prompt_id,))
     rows=cursor.fetchall()
     conn.close()
-    result=[]
+    result:list=[]
     for cur_row in rows:
         row_dict=version_row_to_dict(cur_row)
         result.append(row_dict)

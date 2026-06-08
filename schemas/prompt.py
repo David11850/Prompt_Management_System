@@ -1,5 +1,5 @@
 # prompt.py
-# define all basic data structure
+# define all basic data structure to be service or api function argument
 from pydantic import BaseModel
 
 # prompt
@@ -18,6 +18,8 @@ class VersionCreate(BaseModel):
 class VersionResponse(BaseModel):
     prompt_id:int
     version_id:int
+    content:str
+    tags:list[str]
 
 #render
 class RenderRequest(BaseModel):

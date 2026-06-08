@@ -5,6 +5,7 @@ conn=sqlite3.connect('prompt_manager.db')
 
 cursor=conn.cursor()
 
+# create prompt db
 cursor.execute(
     '''
     CREATE TABLE IF NOT EXISTS prompts(
@@ -13,6 +14,7 @@ cursor.execute(
         create_at DATETIME DEFAULT CURRENT_TIMESTAMP);
     ''')
 
+# create prompt version db
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS prompt_versions(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
